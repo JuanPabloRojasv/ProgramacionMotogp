@@ -167,7 +167,7 @@ public class ListSE {
                     if (contM > CPlist.size) {
                         CPlist.addFinal(temp.getData());
                     } else {
-                        CPlist.addByPosition(new KidByPositionDTO(contM, temp.getData()));
+                        CPlist.addByPosition(contM, temp.getData());
                     }
                     contM += 2;
                 } else {
@@ -197,7 +197,7 @@ public class ListSE {
                         if (contP > ListCp.size) {
                             ListCp.addFinal(temp.getData());
                         } else {
-                            ListCp.addByPosition(new KidByPositionDTO(contP, temp.getData()));
+                            ListCp.addByPosition(contP, temp.getData());
                         }
                         contP += 2;
                     } else {

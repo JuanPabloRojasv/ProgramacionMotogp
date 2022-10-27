@@ -6,6 +6,7 @@ import com.example.api_programacion.model.ListSE;
 import com.example.api_programacion.model.Node;
 import com.example.api_programacion.model.dto.*;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.List;
 
 public class ListSEService {
     private ListSE list;
+    @Autowired CityService cityService;
 
     public ListSEService() {
         list = new ListSE();

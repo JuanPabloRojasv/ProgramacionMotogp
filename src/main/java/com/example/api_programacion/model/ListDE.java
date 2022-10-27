@@ -190,25 +190,30 @@ public class ListDE {
 
     /// Adicionar por posición
     ///
-    public void addByPosition(KidByPositionDTO kidByPositionDTO) {
-        if ((head == null) || kidByPositionDTO.getPosition() == 1) {
-            addToStart(kidByPositionDTO.getKid());
-            this.head.getNext().setPrevious(head);
-        } else {
-            if (kidByPositionDTO.getPosition() > size) {
-                add(kidByPositionDTO.getKid());
-            } else {
-                NodeDE temp = head;
-                int count = 1;
-                while (count < (kidByPositionDTO.getPosition() - 1)) {
-                    temp = temp.getNext();
-                    count += 1;
-                }
-                Node newNode = new Node(kidByPositionDTO.getKid());
-                newNode.setNext(newNode);
-
-                size += 1;
-            }
-        }
-    }
+   // public void addByPosition(int position, Kid kid)
+    //{
+      //  if (head == null || position == 1)
+        //{
+          //  addToStart(kid);
+        //} else
+        //{
+          //  if (position > size)
+            //{
+              //  add(kid);
+            //} else
+            //{
+               // Node temp = head;
+                //int count = 1;
+                //while (count < (position - 1))
+                //{
+                    //temp = temp.getNext();
+                    //count += 1;
+                //}
+                //Node newNode = new Node(kid);
+                //newNode.setNext(temp.getNext());
+                //temp.setNext(newNode);
+                //size += 1;
+            //}
+        //}
+    //}
 }

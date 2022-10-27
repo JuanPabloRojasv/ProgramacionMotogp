@@ -1,16 +1,17 @@
-package com.example.api_programacion.model;
-
+package com.example.api_programacion.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@AllArgsConstructor
 @Data
-public class Kid {
+@AllArgsConstructor
+
+public class KidCityDTO
+{
     private String identification;
     private String name;
     private byte age;
     private char gender;
     private byte num_brothers;
-    private City city;
+    private String code;
 }

@@ -1,10 +1,10 @@
 package com.example.api_programacion.service;
 
+import com.example.api_programacion.model.City;
 import com.example.api_programacion.model.Kid;
 import com.example.api_programacion.model.ListSE;
-import com.example.api_programacion.model.dto.FletAgeDTO;
-import com.example.api_programacion.model.dto.KidByPositionDTO;
-import com.example.api_programacion.model.dto.RangeByAgeDTO;
+import com.example.api_programacion.model.Node;
+import com.example.api_programacion.model.dto.*;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +19,8 @@ public class ListSEService {
 
     public ListSEService() {
         list = new ListSE();
-        list.addFirst(new Kid("1002654940","Jeronimo Murillo",(byte)19,'M'));
-        list.addFirst(new Kid("34344343","Pedro Pérez",(byte)16,'M'));
+        list.addFirst(new Kid("1002654940","Jeronimo Murillo",(byte)19,'M', (byte) 2,new City("16917001", "Manizales")));
+        list.addFirst(new Kid("34344343","Pedro Pérez",(byte)16,'M', (byte) 1,new City("16917001", "Manizales")));
 
     }
 
@@ -58,7 +58,8 @@ public class ListSEService {
     }
     public String addByPosition(KidByPositionDTO kidByPositionDTO)
     {
-        list.addByPosition(kidByPositionDTO);
+        Kid kid= new Kid(kidByPositionDTO.getKidCityDTO().getIdentification(),kidByPositionDTO.getKidCityDTO().getName(),kidByPositionDTO.getKidCityDTO().getAge(),kidByPositionDTO.getKidCityDTO().getGender(), kidByPositionDTO.getKidCityDTO().getNum_brothers(), cityService.searchCityByCode(kidByPositionDTO.getKidCityDTO().getCode()));
+        list.addByPosition(kidByPositionDTO.getPosition(), kid);
         return "aggregate position";
     }
     public String changeExtreme()
@@ -92,4 +93,11 @@ public class ListSEService {
         list.DeleteletterAndAge(fletAgeDTO);
         return "kid eliminated";
     }
+    public Node addKidByGenderByAgeBywhitbrothers(KidBygenderwhitBbrothersDTO kidBygenderwhitBbrothersDTO)
+    {
+        return list.addKidByGenderByAgeBywhitbrothers(kidBygenderwhitBbrothersDTO).getHead();
+    }
+
+
+
 }

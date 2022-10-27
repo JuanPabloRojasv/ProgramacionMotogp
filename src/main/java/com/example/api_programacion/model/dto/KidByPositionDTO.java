@@ -8,5 +8,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class KidByPositionDTO {
     private int position;
-    private Kid kid;
+    private KidCityDTO kidCityDTO;
+
 }

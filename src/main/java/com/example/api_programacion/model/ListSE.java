@@ -3,7 +3,7 @@ package com.example.api_programacion.model;
 
 import com.example.api_programacion.model.dto.FletAgeDTO;
 import com.example.api_programacion.model.dto.KidByPositionDTO;
-import com.sun.xml.messaging.saaj.soap.StringDataContentHandler;
+import com.example.api_programacion.model.dto.KidBygenderwhitBbrothersDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -35,12 +35,10 @@ public class ListSE {
             while (temp.getNext() != null) {
                 temp = temp.getNext();
             }
-
             Node newNode = new Node(kid);
             temp.setNext(newNode);
-
-            size++;
         }
+        size++;
     }
 
     public void addFirst(Kid kid) {
@@ -102,8 +100,7 @@ public class ListSE {
     }
 
 
-    public void girlsFirst()
-    {
+    public void girlsFirst() {
         if (head != null) {
             Node temp = head;
             ListSE copylist = new ListSE();
@@ -119,20 +116,26 @@ public class ListSE {
         }
     }
 
-    public void addByPosition(KidByPositionDTO kidByPositionDTO) {
-        if (head == null || kidByPositionDTO.getPosition() == 1) {
-            addFirst(kidByPositionDTO.getKid());
-        } else {
-            if (kidByPositionDTO.getPosition() > size) {
-                addFinal(kidByPositionDTO.getKid());
-            } else {
+    public void addByPosition(int position, Kid kid)
+    {
+        if (head == null || position == 1)
+        {
+            addFirst(kid);
+        } else
+        {
+            if (position > size)
+            {
+                addFinal(kid);
+            } else
+            {
                 Node temp = head;
                 int count = 1;
-                while (count < (kidByPositionDTO.getPosition() - 1)) {
+                while (count < (position - 1))
+                {
                     temp = temp.getNext();
                     count += 1;
                 }
-                Node newNode = new Node(kidByPositionDTO.getKid());
+                Node newNode = new Node(kid);
                 newNode.setNext(temp.getNext());
                 temp.setNext(newNode);
                 size += 1;
@@ -140,8 +143,7 @@ public class ListSE {
         }
     }
 
-    public void changeExtreme()
-    {
+    public void changeExtreme() {
         if (head != null) {
             Kid tempkid = head.getData();
             Node temp = head;
@@ -154,15 +156,13 @@ public class ListSE {
     }
 
     public void mixByGender() {
-        if (size > 1)
-        {
+        if (size > 1) {
             int contM = 1;
             int contF = 2;
 
             Node temp = head;
             ListSE CPlist = new ListSE();
-            while (temp != null)
-            {
+            while (temp != null) {
                 if (temp.getData().getGender() == 'M') {
                     if (contM > CPlist.size) {
                         CPlist.addFinal(temp.getData());
@@ -174,7 +174,7 @@ public class ListSE {
                     if (contF > CPlist.size) {
                         CPlist.addFinal(temp.getData());
                     } else {
-                        CPlist.addByPosition(new KidByPositionDTO(contF, temp.getData()));
+                        CPlist.addByPosition(contF, temp.getData());
                     }
                     contF += 2;
                 }
@@ -185,9 +185,7 @@ public class ListSE {
     }
 
 
-
-    public void evenAndOdd()
-    {
+    public void evenAndOdd() {
         if (size > 1) {
             if (head != null) {
                 Node temp = head;
@@ -202,60 +200,77 @@ public class ListSE {
                             ListCp.addByPosition(new KidByPositionDTO(contP, temp.getData()));
                         }
                         contP += 2;
-                    } else
-                    {
-                        if(contI > ListCp.size)
-                        {
+                    } else {
+                        if (contI > ListCp.size) {
                             ListCp.addFinal(temp.getData());
+                        } else {
+                            ListCp.addByPosition(contP, temp.getData());
                         }
-                        else
-                        {
-                            ListCp.addByPosition(new KidByPositionDTO(contP, temp.getData()));
-                        }
-                        contI +=2;
+                        contI += 2;
                     }
                     temp = temp.getNext();
                 }
                 head = ListCp.getHead();
-                }
             }
         }
-        public int RangeByAge(int initial, int end)
-        {
+    }
 
-            int count =0;
-            if (head != null)
-            {
-                Node temp = head;
-                while(temp != null)
-                {
-                    if(temp.getData().getAge() >= initial && temp.getData().getAge() <=end)
-                    {
-                        count +=1;
-                    }
-                    temp.getNext();
-                }
-            }
-            return count;
-        }
-    public void DeleteletterAndAge(FletAgeDTO fletAgeDTO)
-    {
-        if (head !=null)
-        {
+    public int RangeByAge(int initial, int end) {
+
+        int count = 0;
+        if (head != null) {
             Node temp = head;
-            ListSE newlist= new ListSE();
-            while (temp != null)
-            {
+            while (temp != null) {
+                if (temp.getData().getAge() >= initial && temp.getData().getAge() <= end) {
+                    count += 1;
+                }
+                temp.getNext();
+            }
+        }
+        return count;
+    }
+
+    public void DeleteletterAndAge(FletAgeDTO fletAgeDTO) {
+        if (head != null) {
+            Node temp = head;
+            ListSE newlist = new ListSE();
+            while (temp != null) {
                 // selecciona el primer carater de un string
-                if(temp.getData().getName().charAt(0) != fletAgeDTO.getLetter()
-                        || temp.getData().getAge() != fletAgeDTO.getAge())
-                {
+                if (temp.getData().getName().charAt(0) != fletAgeDTO.getLetter()
+                        || temp.getData().getAge() != fletAgeDTO.getAge()) {
                     newlist.addFinal(temp.getData());
                 }
                 temp = temp.getNext();
             }
-            head= newlist.getHead();
+            head = newlist.getHead();
         }
+    }
+
+    // Metodo que retorna una lista de niños que recibe la edad, el genero dependiendo del numero de hermanos.
+    public ListSE addKidByGenderByAgeBywhitbrothers(KidBygenderwhitBbrothersDTO kidBygenderwhitBbrothersDTO) {
+        // Creamos una lista copia que reciba los datos pedidos
+        ListSE listCP = new ListSE();
+        //mientras haya datos haremos esto
+        if (head != null)
+        {
+            // creamos el temporal y que se posicione en cabeza
+            Node temp = head;
+            // mientras donde este parado el ayudante hayan datos
+            while (temp != null)
+            {
+                // si el genero, edad y el numero de hermanos del niño es el mismo donde esté parado
+                if (temp.getData().getGender() == kidBygenderwhitBbrothersDTO.getGender() && temp.getData().getAge() >= kidBygenderwhitBbrothersDTO.getAge() && temp.getData().getNum_brothers() >= 1)
+                {
+                    // adicione al niño en la lista copia
+                    listCP.addFinal(temp.getData());
+                }
+                // temporal pase
+                temp = temp.getNext();
+
+            }
+        }
+        // retorne la lista copia
+        return listCP;
     }
 
 }

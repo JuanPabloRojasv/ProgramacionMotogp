@@ -2,9 +2,8 @@ package com.example.api_programacion.controller;
 
 import com.example.api_programacion.model.Kid;
 import com.example.api_programacion.model.Node;
-import com.example.api_programacion.model.dto.FletAgeDTO;
-import com.example.api_programacion.model.dto.KidByPositionDTO;
-import com.example.api_programacion.model.dto.RangeByAgeDTO;
+import com.example.api_programacion.model.dto.*;
+import com.example.api_programacion.service.CityService;
 import com.example.api_programacion.service.ListSEService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,17 +17,23 @@ import java.util.List;
 public class ListSEController {
     @Autowired
     private ListSEService listSEService;
+    @Autowired
+    private CityService cityService;
 
     @GetMapping
     public Node getlist() {return listSEService.getList().getHead(); }
 
     @PostMapping(path = "addfirst")
-    public String addFirst(@RequestBody Kid kid) {
+    public String addFirst(@RequestBody KidCityDTO kidCityDTO)
+    {
+        Kid kid= new Kid(kidCityDTO.getIdentification(), kidCityDTO.getName(),kidCityDTO.getAge(),kidCityDTO.getGender(),kidCityDTO.getNum_brothers(), cityService.searchCityByCode(kidCityDTO.getCode()));
         return listSEService.addFirst(kid);
     }
 
     @PostMapping(path = "addfinal")
-    public String addFinal(@RequestBody Kid kid) { return listSEService.addFinal(kid);}
+    public String addFinal(@RequestBody KidCityDTO kidCityDTO) {
+        Kid kid= new Kid(kidCityDTO.getIdentification(), kidCityDTO.getName(),kidCityDTO.getAge(),kidCityDTO.getGender(),kidCityDTO.getNum_brothers(), cityService.searchCityByCode(kidCityDTO.getCode()));
+        return listSEService.addFinal(kid);}
 
     @PostMapping(path = "deleteposition")
     public String deletePosition(@RequestBody int position){ return listSEService.deletePosition(position);}
@@ -64,5 +69,11 @@ public class ListSEController {
 
     @GetMapping (path = "/rangebyage")
     public List<RangeByAgeDTO> ranges(){return listSEService.RangeByAge();}
+
+    @PostMapping(path = "/addKidByGenderByAgeBywhitbrothers")
+    public Node addKidByGenderByAgeBywhitbrothers(@RequestBody KidBygenderwhitBbrothersDTO kidBygenderwhitBbrothersDTO)
+    {
+        return listSEService.addKidByGenderByAgeBywhitbrothers(kidBygenderwhitBbrothersDTO);
+    }
 
 }

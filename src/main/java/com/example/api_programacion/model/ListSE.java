@@ -14,7 +14,8 @@ public class ListSE {
     private int size;
 
     public int count() {
-        if (head.getData() == null) {
+        if (head.getData() == null)
+        {
             return 0;
         }
         Node temp = head;
